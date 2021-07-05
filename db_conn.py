@@ -8,14 +8,6 @@ load_dotenv()
 
 @dataclass
 class DBConnection:
-    """
-    db_user: str = conf.get_db_user()
-    db_pass: str = conf.get_db_pass()
-    db_host: str = conf.get_db_host()
-    db_database: str = conf.get_db_database()
-    db_provider: str = conf.get_db_provider()
-    """
-
     db_user: str = os.getenv('POSTGRE_USER')
     db_pass: str = os.getenv('POSTGRE_PASS')
     db_host: str = os.getenv('POSTGRE_HOST')
