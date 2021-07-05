@@ -4,19 +4,37 @@ import entities
 
 
 @db_session
-def test_create_category():
+def test_create_ingcategory():
     test_name = 'TEST'
 
-    cat1 = entities.Category(name=test_name)
+    cat1 = entities.IngCategory(name=test_name)
 
     assert cat1.name == test_name
 
 
 @db_session
-def test_create_subcategory():
+def test_create_ingsubcategory():
     test_name = 'TEST'
 
-    cat1 = entities.Subcategory(name=test_name)
+    cat1 = entities.IngSubcategory(name=test_name)
+
+    assert cat1.name == test_name
+
+
+@db_session
+def test_create_owncategory():
+    test_name = 'TEST'
+
+    cat1 = entities.OwnCategory(name=test_name)
+
+    assert cat1.name == test_name
+
+
+@db_session
+def test_create_ownsubcategory():
+    test_name = 'TEST'
+
+    cat1 = entities.OwnSubcategory(name=test_name)
 
     assert cat1.name == test_name
 

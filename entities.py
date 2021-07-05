@@ -1,20 +1,32 @@
 from db_conn import DBConnection
-from pony.orm import PrimaryKey, Required, Optional
+from pony.orm import PrimaryKey, Required, Optional, Set
 from datetime import datetime
 
 my_conn = DBConnection()
 
 
-class Category(my_conn.db.Entity):
+class IngCategory(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str, unique=True)
-    ing = Optional(bool)
+    bank_entries = Set("BankEntry", reverse="ingCategory")
 
 
-class Subcategory(my_conn.db.Entity):
+class IngSubcategory(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str, unique=True)
-    ing = Optional(bool)
+    bank_entries = Set("BankEntry", reverse="ingSubcategory")
+
+
+class OwnCategory(my_conn.db.Entity):
+    id = PrimaryKey(int, auto=True)
+    name = Required(str, unique=True)
+    bank_entries = Set("BankEntry", reverse="ownCategory")
+
+
+class OwnSubcategory(my_conn.db.Entity):
+    id = PrimaryKey(int, auto=True)
+    name = Required(str, unique=True)
+    bank_entries = Set("BankEntry", reverse="ownSubcategory")
 
 
 class MappingCategory(my_conn.db.Entity):
@@ -33,13 +45,13 @@ class MappingSubCategory(my_conn.db.Entity):
 
 class BankEntry(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
-    entryDate: Required(datetime)
-    ingCategory: Optional(Category)
-    ingSubcategory: Optional(Subcategory)
-    ownCategory: Optional(Category)
-    ownSubcategory: Optional(Subcategory)
-    amount: Required(float)
-    balance: Optional(float)
+    entryDate = Required(datetime)
+    ingCategory = Optional(IngCategory, reverse="bank_entries")
+    ingSubcategory = Optional(IngSubcategory, reverse="bank_entries")
+    ownCategory = Optional(OwnCategory, reverse="bank_entries")
+    ownSubcategory = Optional(OwnSubcategory, reverse="bank_entries")
+    amount = Required(float)
+    balance = Optional(float)
 
 
 my_conn.db.generate_mapping(create_tables=True)
