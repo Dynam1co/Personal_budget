@@ -15,5 +15,9 @@ class DBConnection:
     db_provider: str = os.getenv('POSTGRE_PROVIDER')
 
     db = Database()
-    db.bind(provider=db_provider, user=db_user, password=db_pass, host=db_host,
-            database=db_database)
+
+    if db_provider:
+        db.bind(provider=db_provider, user=db_user, password=db_pass,
+                host=db_host, database=db_database)
+    else:  # In test use in memory database
+        db.bind(provider='sqlite', filename=':memory:')

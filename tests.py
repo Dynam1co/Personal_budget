@@ -5,7 +5,6 @@ import entities
 @db_session
 def test_create_category():
     test_name = 'TEST'
-    entities.DBConnection.db.bind(provider='sqlite', filename=':memory:')
 
     cat1 = entities.Category(name=test_name)
 
