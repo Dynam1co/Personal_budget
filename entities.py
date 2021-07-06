@@ -1,6 +1,7 @@
 from db_conn import DBConnection
 from pony.orm import PrimaryKey, Required, Optional, Set
 from datetime import datetime
+import decimal
 
 my_conn = DBConnection()
 
@@ -50,8 +51,8 @@ class BankEntry(my_conn.db.Entity):
     ingSubcategory = Optional(IngSubcategory, reverse="bank_entries")
     ownCategory = Optional(OwnCategory, reverse="bank_entries")
     ownSubcategory = Optional(OwnSubcategory, reverse="bank_entries")
-    amount = Required(float)
-    balance = Optional(float)
+    amount = Required(decimal.Decimal)
+    balance = Optional(decimal.Decimal)
 
 
 my_conn.db.generate_mapping(create_tables=True)

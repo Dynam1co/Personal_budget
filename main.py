@@ -1,13 +1,5 @@
-import entities
-from pony.orm import db_session
-
-
-@db_session
-def create_test_category():
-    cat1 = entities.IngCategory(name='fffdff')
-
-    print(cat1.name)
+import bank_excel_mgt
 
 
 if __name__ == '__main__':
-    create_test_category()
+    bank_excel_mgt.run_import_process()
