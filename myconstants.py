@@ -8,7 +8,7 @@ PROCESS_PATH = os.getenv("PROCESS_PATH")
 PROCESSED_PATH = os.getenv("PROCESSED_PATH")
 
 # Initial excel row to import
-INITIAL_ROW = int(os.getenv("INITIAL_ROW"))
+INITIAL_ROW = os.getenv("INITIAL_ROW")
 
 # PostgreSQL
 POSTGRE_USER = os.getenv("POSTGRE_USER")
