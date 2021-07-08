@@ -1,7 +1,10 @@
+from xlrd import book
 import myconstants
 import os
 from os import walk
 import xlrd
+import datetime
+from datetime import date
 
 
 def run_import_process():
@@ -42,8 +45,22 @@ def import_file(file):
 
 
 def insert_row_data(row):
-    # TODO: Extract fields and insert into database
-    pass
+    # Extract fields and insert into database
+    DATE_POS = 0
+    CAT_POS = 1
+    SUBCAT_POS = 2
+    DESC_POS = 3
+    AMOUNT_POS = 6
+    BALANCE_POS = 7
+
+    entry_date_time = xlrd.xldate_as_datetime(row[DATE_POS].value, 0)
+    entry_date = entry_date_time.date()
+
+    category = row[CAT_POS].value
+    sub_category = row[SUBCAT_POS].value
+    description = row[DESC_POS].value
+    amount = row[AMOUNT_POS].value
+    balance = row[BALANCE_POS].value
 
 
 def move_file_to_processed(file):
