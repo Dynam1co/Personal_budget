@@ -111,5 +111,8 @@ def insert_category_if_not_exists(cat_name):
 
 
 def move_file_to_processed(file):
-    # TODO: Move file to processed folder
-    pass
+    # Move file to processed folder
+    initial_path = f"{myconstants.PROCESS_PATH}/{file}"
+    final_path = f"{myconstants.PROCESSED_PATH}/{file}"
+
+    os.rename(initial_path, final_path)
