@@ -43,6 +43,13 @@ class MappingSubCategory(my_conn.db.Entity):
     PrimaryKey(ingId, ownId)
 
 
+class ExpenseType(my_conn.db.Entity):
+    id = PrimaryKey(int, auto=True)
+    name = Required(str)
+    periodicity = Required(str)
+    bank_entries = Set("BankEntry", reverse="expenseType")
+
+
 class BankEntry(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
     entryDate = Required(date)
@@ -53,6 +60,7 @@ class BankEntry(my_conn.db.Entity):
     amount = Required(float)
     balance = Optional(float)
     description = Optional(str)
+    expenseType = Optional(ExpenseType, reverse="bank_entries")
 
 
 my_conn.db.generate_mapping(create_tables=True)
