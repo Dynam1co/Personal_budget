@@ -1,3 +1,8 @@
+import myconstants
+
+myconstants.POSTGRE_PROVIDER = None
+
+
 from pony.orm import db_session
 from pony.converting import str2datetime
 import entities
