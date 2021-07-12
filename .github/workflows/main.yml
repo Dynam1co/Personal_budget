@@ -48,4 +48,5 @@ jobs:
         run: |
           pip install pytest
           pip install pytest-cov
-          pytest --doctest-modules --junitxml=junit/test-results.xml --cov=Personal_budget tests/ --cov-report=xml --cov-report=html
+          pytest --exitfirst --verbose --failed-first \
+          --cov=. --cov-report html
