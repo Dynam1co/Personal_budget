@@ -21,12 +21,14 @@ class OwnCategory(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str, unique=True)
     bank_entries = Set("BankEntry", reverse="ownCategory")
+    subcategories = Set("OwnSubcategory", reverse="main_category")
 
 
 class OwnSubcategory(my_conn.db.Entity):
     id = PrimaryKey(int, auto=True)
-    name = Required(str, unique=True)
+    name = Required(str)
     bank_entries = Set("BankEntry", reverse="ownSubcategory")
+    main_category = Optional(OwnCategory, reverse="subcategories")
 
 
 class MappingCategory(my_conn.db.Entity):
