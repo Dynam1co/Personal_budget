@@ -1,6 +1,6 @@
 from pony.orm import db_session
 from pony.converting import str2datetime
-from .. import entities
+import entities
 
 
 @db_session
