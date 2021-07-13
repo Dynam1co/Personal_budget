@@ -3,6 +3,7 @@ import myconstants
 from pony.orm import db_session
 from pony.orm.core import select
 import entities
+import categorize
 
 
 def create_entry_types():
@@ -24,3 +25,5 @@ if __name__ == "__main__":
     create_entry_types()
 
     bank_excel_mgt.run_import_process()
+
+    categorize.categorize_new_entries()
