@@ -22,6 +22,7 @@ class OwnCategory(my_conn.db.Entity):
     name = Required(str, unique=True)
     bank_entries = Set("BankEntry", reverse="ownCategory")
     subcategories = Set("OwnSubcategory", reverse="main_category")
+    mapCats = Set("MappingCategories", reverse="catId")
 
 
 class OwnSubcategory(my_conn.db.Entity):
@@ -29,20 +30,15 @@ class OwnSubcategory(my_conn.db.Entity):
     name = Required(str)
     bank_entries = Set("BankEntry", reverse="ownSubcategory")
     main_category = Optional(OwnCategory, reverse="subcategories")
+    mapSubCats = Set("MappingCategories", reverse="subcatId")
 
 
-class MappingCategory(my_conn.db.Entity):
-    ingId = Required(int)
-    ownId = Required(int)
-
-    PrimaryKey(ingId, ownId)
-
-
-class MappingSubCategory(my_conn.db.Entity):
-    ingId = Required(int)
-    ownId = Required(int)
-
-    PrimaryKey(ingId, ownId)
+class MappingCategories(my_conn.db.Entity):
+    id = PrimaryKey(int, auto=True)
+    textToFind = Required(str)
+    textoToExclude = Optional(str)
+    catId = Required(OwnCategory, reverse="mapCats")
+    subcatId = Required(OwnSubcategory, reverse="mapSubCats")
 
 
 class ExpenseType(my_conn.db.Entity):
