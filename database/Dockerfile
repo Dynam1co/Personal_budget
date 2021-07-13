@@ -1,0 +1,4 @@
+FROM postgres:latest
+ENV POSTGRES_PASSWORD=cgFxx6sRa8Yge3T
+ENV POSTGRES_USER=fjasensi
+ENV POSTGRES_DB=Atlas_finance

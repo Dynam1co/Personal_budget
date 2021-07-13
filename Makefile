@@ -31,3 +31,9 @@ ps:
 
 restart:
 	docker-compose restart
+
+runcontainers:
+	docker-compose up --build
+
+stopcontainers:
+	docker-compose down
