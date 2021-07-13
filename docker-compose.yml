@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  #app :
+    #build: ./
+  db:
+    build: ./database/
+    volumes:
+    - postgresql-volume:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+volumes:
+  postgresql-volume:
+    external:
+      true
