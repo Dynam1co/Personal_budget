@@ -18,6 +18,19 @@ The system will automatically load them to the database and move them to a "proc
 
 The transactions must be correctly categorized for the analysis to be good. A series of reports will be generated and sent via Telegram.
 
+## Own categories and subcategories
+The categories and subcategories assigned by the bank are not sufficient and are often inaccurate, so there is a table to store the categories themselves and another one for the subcategories. We will have to fill in these two tables based on our own criteria.
+
+### Automatic mapping of categories and subcategories
+Once the movement is saved in the database, there is a procedure to establish our own categories and subcategories, to do this as automatically as possible we have created a table that links descriptions of bank movements with a category and subcategory.
+
+The table is called **mappingcategories** with the following structure:
+| TEXT TO FIND  | TEXT TO EXCLUDE      | DESTINATION CATEGORY | DESTINATION SUBCATEGORY |
+| ------------- | ------------------ | ----------- | -------------- |
+| nomina        | traspaso periódico | 12          | 3              |
+| est. servicio |                    | 15          | 7              |
+
+
 ## Config
 Rename **.env.sample** to **.env** and use your own parameters.
 
