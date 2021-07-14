@@ -7,8 +7,10 @@ help:
 	@echo "---------------HELP-----------------"
 	@echo "To install dependenceis: make install"
 	@echo "To run the project: make run"
+	@echo "To run background tasks: make tasks"
 	@echo "To test: make test"
 	@echo "To lint with flake8: make flake"
+	@echo "To run the formatter make black"
 	@echo "------------------------------------"
 
 install:
@@ -16,6 +18,9 @@ install:
 
 test:
 	pytest tests.py
+
+tasks:
+	python background_process.py
 
 run:
 	python main.py

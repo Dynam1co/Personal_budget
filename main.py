@@ -1,29 +1,25 @@
-import bank_excel_mgt
-import myconstants
-from pony.orm import db_session
-from pony.orm.core import select
-import entities
-import categorize
+import os
+from bcolor import bcolors
 
 
-def create_entry_types():
-    with db_session:
-        for di in myconstants.EXPENSE_TYPE:
-            if not expense_type_exists(di["name"], di["periodicity"]):
-                entities.ExpenseType(name=di["name"], periodicity=di["periodicity"])
-
-
-def expense_type_exists(name, period):
-    obj_types = select(
-        t for t in entities.ExpenseType if t.name == name and t.periodicity == period
-    )
-
-    return obj_types.count() > 0
+def print_menu():
+    os.system("clear")
+    print(f"{bcolors.OKBLUE}Seleccione opción{bcolors.NORMAL}")
+    print(f"\t{bcolors.OKGREEN}1 -{bcolors.NORMAL} Ver movimientos pendientes")
+    print(f"\t{bcolors.OKGREEN}2 -{bcolors.NORMAL} segunda opción")
+    print(f"\t{bcolors.OKGREEN}3 -{bcolors.NORMAL} tercera opción")
+    print(f"\t{bcolors.OKGREEN}9 -{bcolors.NORMAL} salir")
 
 
 if __name__ == "__main__":
-    create_entry_types()
+    exit = False
 
-    bank_excel_mgt.run_import_process()
+    while not exit:
+        print_menu()
+        menu_option = input(
+            f"\n{bcolors.OKBLUE}{bcolors.UNDERLINE}Opción{bcolors.NORMAL}{bcolors.OKBLUE} >> {bcolors.NORMAL}"
+        )
 
-    categorize.categorize_new_entries()
+        if menu_option == "9":
+            print(f"\n{bcolors.RED}Fin programa.{bcolors.NORMAL}")
+            exit = True
