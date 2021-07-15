@@ -91,9 +91,90 @@ def start_entry_categorization():
         )
         return start_entry_categorization()
 
-    # TODO: Print categories
-    # TODO: Print subcategories
-    # TODO: Apply category and sub categories
+    # Print and select categories
+    cat_id = select_category()
+
+    if cat_id == 0:
+        return
+
+    # Print and select subcategories
+    subcat_id = select_subcategory(cat_id)
+
+    if subcat_id == 0:
+        return
+
+    # Apply category and sub categories to entry
+    apply_categories_to_entry(int(entry_id), int(cat_id), int(subcat_id))
+
+    print(f"\n{bcolors.OKGREEN}Correcto.{bcolors.NORMAL}\n")
+
+
+@db_session
+def apply_categories_to_entry(entry_id, category_id, subcategory_id):
+    entry = entities.BankEntry[entry_id]
+
+    entry.ownCategory = category_id
+    entry.ownSubcategory = subcategory_id
+
+
+def select_subcategory(cat_id):
+    subcategories = get_own_subcategories(cat_id)
+
+    subcategories_id = [subcat.id for subcat in subcategories]
+
+    print(f"\n{bcolors.OKBLUE}Seleccione categoría:{bcolors.NORMAL}")
+
+    for subcategory in subcategories:
+        print(f"\t{subcategory.id} - {subcategory.name}")
+
+    subcat_id = input(
+        f"\n{bcolors.OKBLUE}Subcategoría (0 para salir) >> {bcolors.NORMAL}"
+    )
+
+    if subcat_id == "0":
+        return 0
+
+    if int(subcat_id) not in subcategories_id:
+        print(f"\n{bcolors.RED}La Subcategoría no existe{bcolors.NORMAL}")
+        return select_subcategory(cat_id)
+
+    return subcat_id
+
+
+def select_category():
+    categories = get_own_categories()
+
+    categories_ids = [cat.id for cat in categories]
+
+    print(f"\n{bcolors.OKBLUE}Seleccione categoría:{bcolors.NORMAL}")
+
+    for category in categories:
+        print(f"\t{category.id} - {category.name}")
+
+    cat_id = input(f"\n{bcolors.OKBLUE}Categoría (0 para salir) >> {bcolors.NORMAL}")
+
+    if cat_id == "0":
+        return 0
+
+    if int(cat_id) not in categories_ids:
+        print(f"\n{bcolors.RED}La categoría no existe{bcolors.NORMAL}")
+        return select_category()
+
+    return cat_id
+
+
+@db_session
+def get_own_categories():
+    return select(c for c in entities.OwnCategory)[:]
+
+
+@db_session
+def get_own_subcategories(parent_category_id):
+    return select(
+        c
+        for c in entities.OwnSubcategory
+        if c.main_category.id == int(parent_category_id)
+    )[:]
 
 
 @db_session
