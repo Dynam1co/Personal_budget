@@ -1,7 +1,8 @@
 """Used for main program tasks:
     - Show entries pending categorize
     - Categorize entries
-    - Show reports"""
+    - Show reports
+    - Import new bank files"""
 
 
 import os
@@ -10,6 +11,7 @@ from pony.orm import db_session
 from pony.orm.core import ObjectNotFound, select
 import entities
 from prettytable import PrettyTable
+import background_process
 
 
 def get_pending_entries():
@@ -202,6 +204,7 @@ def print_menu():
     print(f"\t{bcolors.OKGREEN}2 -{bcolors.NORMAL} Categorizar movimiento")
     print(f"\t{bcolors.OKGREEN}3 -{bcolors.NORMAL} Crear nuevo mapeo categorías")
     print(f"\t{bcolors.OKGREEN}4 -{bcolors.NORMAL} Dividir movimientos")
+    print(f"\t{bcolors.OKGREEN}5 -{bcolors.NORMAL} Importar ficheros")
     print(f"\t{bcolors.OKGREEN}0 -{bcolors.NORMAL} Salir")
 
 
@@ -222,6 +225,10 @@ if __name__ == "__main__":
         elif menu_option == "2":
             start_entry_categorization()
 
+        elif menu_option == "5":
+            background_process.main()
+            print(f"\n{bcolors.OKGREEN}Correcto.{bcolors.NORMAL}\n")
+
         elif menu_option == "0":
-            print(f"\n{bcolors.RED}Fin programa.{bcolors.NORMAL}")
+            print(f"\n{bcolors.RED}Fin programa.{bcolors.NORMAL}\n")
             exit = True

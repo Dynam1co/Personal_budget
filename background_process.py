@@ -27,9 +27,13 @@ def expense_type_exists(name, period):
     return obj_types.count() > 0
 
 
-if __name__ == "__main__":
+def main():
     create_entry_types()
 
     bank_excel_mgt.run_import_process()
 
     categorize.categorize_new_entries()
+
+
+if __name__ == "__main__":
+    main()
