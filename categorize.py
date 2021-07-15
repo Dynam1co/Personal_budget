@@ -1,3 +1,5 @@
+"""Used to categorize entries automatically"""
+
 from pony.orm.core import select
 import entities
 from pony.orm import db_session

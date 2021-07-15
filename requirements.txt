@@ -19,6 +19,7 @@ pathspec==0.8.1
 pluggy==0.13.1
 pony==0.7.14
 pre-commit==2.13.0
+prettytable==2.1.0
 psycopg2-binary==2.9.1
 py==1.10.0
 pycodestyle==2.7.0
@@ -32,4 +33,5 @@ regex==2021.7.6
 six==1.16.0
 toml==0.10.2
 virtualenv==20.4.7
+wcwidth==0.2.5
 xlrd==2.0.1

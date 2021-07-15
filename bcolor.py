@@ -1,4 +1,6 @@
 class bcolors:
+    """Colors for terminal"""
+
     RED = "\033[95m"
     OKBLUE = "\033[94m"
     OKCYAN = "\033[96m"

@@ -1,3 +1,9 @@
+"""Used for background tasks:
+    - Import excel files
+    - Process excel files
+    - Categorize entries"""
+
+
 import bank_excel_mgt
 import myconstants
 from pony.orm import db_session
