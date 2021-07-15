@@ -7,7 +7,7 @@
 import os
 from bcolor import bcolors
 from pony.orm import db_session
-from pony.orm.core import select
+from pony.orm.core import ObjectNotFound, select
 import entities
 from prettytable import PrettyTable
 
@@ -21,6 +21,7 @@ def get_pending_entries():
 
 
 def print_pending_entries():
+    """Print table for pending entries"""
     entries = get_pending_entries()
 
     x = PrettyTable()
@@ -53,6 +54,7 @@ def get_colnames():
 
 
 def get_row(entry):
+    """Return tablerow from entry"""
     fields = [
         entry.id,
         entry.entryDate,
@@ -70,6 +72,47 @@ def get_row(entry):
     return fields
 
 
+def start_entry_categorization():
+    """Init categorization process"""
+    entry_id = input(
+        f"\n{bcolors.OKBLUE}Movimiento a categorizar (0 para salir){bcolors.OKBLUE} >> {bcolors.NORMAL}"
+    )
+
+    if entry_id == "0":
+        return
+
+    if not entry_exists(entry_id):
+        print(f"\n{bcolors.RED}Movimiento no encontrado{bcolors.NORMAL}")
+        return start_entry_categorization()
+
+    if not entry_is_pending(entry_id):
+        print(
+            f"\n{bcolors.RED}Movimiento: {entry_id} no está pendiente de categorizar{bcolors.NORMAL}"
+        )
+        return start_entry_categorization()
+
+    # TODO: Print categories
+    # TODO: Print subcategories
+    # TODO: Apply category and sub categories
+
+
+@db_session
+def entry_is_pending(entry_id):
+    entry = entities.BankEntry[entry_id]
+
+    return entry.ownCategory is None or entry.ownSubcategory is None
+
+
+@db_session
+def entry_exists(entry_id):
+    try:
+        entities.BankEntry[entry_id]
+    except ObjectNotFound:
+        return False
+
+    return True
+
+
 def print_menu():
     print(f"{bcolors.OKBLUE}Seleccione opción{bcolors.NORMAL}")
     print(
@@ -78,7 +121,7 @@ def print_menu():
     print(f"\t{bcolors.OKGREEN}2 -{bcolors.NORMAL} Categorizar movimiento")
     print(f"\t{bcolors.OKGREEN}3 -{bcolors.NORMAL} Crear nuevo mapeo categorías")
     print(f"\t{bcolors.OKGREEN}4 -{bcolors.NORMAL} Dividir movimientos")
-    print(f"\t{bcolors.OKGREEN}9 -{bcolors.NORMAL} Salir")
+    print(f"\t{bcolors.OKGREEN}0 -{bcolors.NORMAL} Salir")
 
 
 if __name__ == "__main__":
@@ -95,6 +138,9 @@ if __name__ == "__main__":
             with db_session:
                 print_pending_entries()
 
-        elif menu_option == "9":
+        elif menu_option == "2":
+            start_entry_categorization()
+
+        elif menu_option == "0":
             print(f"\n{bcolors.RED}Fin programa.{bcolors.NORMAL}")
             exit = True
