@@ -18,6 +18,13 @@ The system will automatically load them to the database and move them to a "proc
 
 The transactions must be correctly categorized for the analysis to be good. A series of reports will be generated and sent via Telegram.
 
+## Execution flow
+The application has two operating threads. One is continuously running and is in charge of processing files, loading them into the database and categorizing the ones it can.
+
+Another that requires user intervention, which allows to visualize the movements pending to be categorized, categorize them manually, etc. This part displays a menu with which the user can interact:
+
+![Menu capture](img/menu.PNG)
+
 ## Own categories and subcategories
 The categories and subcategories assigned by the bank are not sufficient and are often inaccurate, so there is a table to store the categories themselves and another one for the subcategories. We will have to fill in these two tables based on our own criteria.
 
@@ -35,7 +42,7 @@ The table is called **mappingcategories** with the following structure:
 Rename **.env.sample** to **.env** and use your own parameters.
 
 ## Constants
-There is a file with constants [myconstants.py](myconstants.py). The sensitive ones are read from the .env file. Others, such as the expense types, are put in a dictionary that is automatically loaded into the database when the [main.py](main.py) file is executed.
+There is a file with constants [myconstants.py](myconstants.py). The sensitive ones are read from the .env file. Others, such as the expense types, are put in a dictionary that is automatically loaded into the database when the [background_process.py](background_process.py) file is executed.
 
 These expense types are necessary to be able to configure alerts for periodic payments.
 

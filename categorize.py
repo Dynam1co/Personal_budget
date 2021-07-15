@@ -1,3 +1,5 @@
+"""Used to categorize entries automatically"""
+
 from pony.orm.core import select
 import entities
 from pony.orm import db_session
@@ -22,7 +24,7 @@ def get_entry_by_rules_and_apply_category(rule):
     # Get entries pending categorization
     pending_entries = get_entries_to_categorize(rule)
 
-    # Appli category and subcategory for each entry
+    # Apply category and subcategory for each entry
     for entry in pending_entries:
         apply_category_to_entry(entry, rule.catId, rule.subcatId)
 
